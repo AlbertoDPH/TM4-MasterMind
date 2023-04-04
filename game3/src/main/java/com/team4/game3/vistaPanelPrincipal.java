@@ -16,7 +16,10 @@ public class vistaPanelPrincipal extends JFrame {
 
 	public String nivelActualString = "";
 
+	//Instaciamos la vistaPanelesDer
 	private vistaPanelesDer vistaPanelesDer;
+	//Instanciamos la vistaComprobar
+	private vistaComprobar vistaComprobar;
 
 	public vistaPanelPrincipal() {
 		setResizable(false);
@@ -71,13 +74,17 @@ public class vistaPanelPrincipal extends JFrame {
 		itemComoJugar.addActionListener(comoJugarActionListener);
 		itemAcercaDe.addActionListener(acercaDeActionListener);
 		itemCambioColor.addActionListener(cambioColorActionListener);
-		
+
 		vistaPanelesDer = new vistaPanelesDer();
+		vistaComprobar = new vistaComprobar(vistaPanelesDer.getColores(), vistaPanelesDer);
 
 		// Agregar panelSuperiorDerecho y panelInferiorDerecho al diseño en
 		// vistaPanelPrincipal
 		contentPane.add(vistaPanelesDer.getPanelSuperiorDerecho());
 		contentPane.add(vistaPanelesDer.getPanelInferiorDerecho());
+		
+		//Agragamos el panel vistaComprobar al JPanel principal
+		contentPane.add(vistaComprobar);
 
 		setVisible(true);
 	}
