@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: Roger Gibert Rovira
-Build-Jdk: 17.0.6
+Built-By: Alberto
+Build-Jdk: 19
 Created-By: Maven Integration for Eclipse
 

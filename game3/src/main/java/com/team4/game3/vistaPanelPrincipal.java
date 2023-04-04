@@ -11,17 +11,19 @@ import java.awt.event.ActionEvent;
 
 public class vistaPanelPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
-	
+
 	private JPanel contentPane;
-	
+
 	public String nivelActualString = "";
+
+	private vistaPanelesDer vistaPanelesDer;
 
 	public vistaPanelPrincipal() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
 		setTitle("MASTERMIND");
-		
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -69,6 +71,13 @@ public class vistaPanelPrincipal extends JFrame {
 		itemComoJugar.addActionListener(comoJugarActionListener);
 		itemAcercaDe.addActionListener(acercaDeActionListener);
 		itemCambioColor.addActionListener(cambioColorActionListener);
+		
+		vistaPanelesDer = new vistaPanelesDer();
+
+		// Agregar panelSuperiorDerecho y panelInferiorDerecho al diseño en
+		// vistaPanelPrincipal
+		contentPane.add(vistaPanelesDer.getPanelSuperiorDerecho());
+		contentPane.add(vistaPanelesDer.getPanelInferiorDerecho());
 
 		setVisible(true);
 	}
@@ -100,14 +109,14 @@ public class vistaPanelPrincipal extends JFrame {
 
 	ActionListener acercaDeActionListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			vistaAcercaDe vAcDe = new vistaAcercaDe(); 
+			vistaAcercaDe vAcDe = new vistaAcercaDe();
 		}
 	};
 
 	ActionListener cambioColorActionListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Cambio color");
-			//vistaCambioColor vCaCo = new vistaCambioColor();
+			// vistaCambioColor vCaCo = new vistaCambioColor();
 		}
 	};
 
