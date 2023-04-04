@@ -1,2 +1,6 @@
 # TM4-MasterMind
-Primer commit juego Mater Mind
+Primer commit juego Master Mind
+
+Andrea
+Roger
+Alberto
