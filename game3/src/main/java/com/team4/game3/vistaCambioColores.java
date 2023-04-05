@@ -111,21 +111,11 @@ public class vistaCambioColores extends JFrame {
 		buttonCancelar.addActionListener(cancelarActionListener);
 		
 		// -----------------------------------------------------------------------------
-		//buttonAceptar.addActionListener(aceptarActionListener);
-	
-		// -----------------------------------------------------------------------------
 		comprovarPanelesVisibles();
 		
 		setVisible(true);
 	}
-	
-//	ActionListener aceptarActionListener = new ActionListener() {
-//		public void actionPerformed(ActionEvent e) {	
-//		
-//			dispose();
-//		}
-//	};
-	
+		
 	ActionListener cancelarActionListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			dispose();

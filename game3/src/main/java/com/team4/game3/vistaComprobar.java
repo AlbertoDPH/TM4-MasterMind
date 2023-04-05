@@ -25,7 +25,7 @@ public class vistaComprobar extends JPanel {
 	private vistaPanelesDer panelesDer;
 	private JButton btnComprobarActual; // activa o desactiva el boton
 
-	vistaPanelesDer vp = new vistaPanelesDer();
+	//vistaPanelesDer vp = new vistaPanelesDer();
 
 	public vistaComprobar(Color[] colores, vistaPanelesDer panelesDer) {
 		this.colores = colores;

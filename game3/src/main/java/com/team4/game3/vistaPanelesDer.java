@@ -70,13 +70,13 @@ public class vistaPanelesDer {
 		colores[3] = Color.YELLOW;
 
 		// Colores nivel medio
-		if (nivelDifi == 6) {
+		if (nivelDifi >= 6) {
 			colores[4] = Color.ORANGE;
 			colores[5] = Color.MAGENTA;
 		}
 
 		// colores nivel avanzado
-		if (nivelDifi == 8) {
+		if (nivelDifi >= 8) {
 			colores[6] = Color.CYAN;
 			colores[7] = Color.PINK;
 		}
@@ -114,8 +114,8 @@ public class vistaPanelesDer {
 		panelInferiorDerecho.setBorder(BorderFactory.createTitledBorder(compoundBorder, "Combinación secreta"));
 
 		// El panel de solución no seravisible inicialmente
-//		panelInferiorDerecho.setVisible(true);
-		panelInferiorDerecho.setVisible(false);
+		panelInferiorDerecho.setVisible(true);
+//		panelInferiorDerecho.setVisible(false);
 
 		Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
 		solucion = new Color[colores.length];
