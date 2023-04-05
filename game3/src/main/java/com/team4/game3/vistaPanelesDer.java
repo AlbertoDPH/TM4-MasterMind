@@ -8,87 +8,134 @@ import javax.swing.border.Border;
 import java.util.Random;
 
 public class vistaPanelesDer {
-    private JPanel panelSuperiorDerecho;
-    private JPanel panelInferiorDerecho;
-    private Color[] colores;
-    private Color[] solucion;
+	private JPanel panelSuperiorDerecho; // Panel que contiene 'Colores disponibles'
+	private JPanel panelInferiorDerecho; // Panel que contiene 'Combinacion secreta' de colores
+	private Color[] colores; // Array con los colores disponibles
+	private Color[] solucion; // Array que guarda la 'Combinacion secreta' de colores aleatorios
+	private boolean acertaste = false;
 
-    public vistaPanelesDer() {
-        // Inicializa con 4 colores por defecto
-        inicializarColores(4);
-        crearColores();
-        crearSolucion();
-    }
+	int nivel = 6; // Se pasará por parámetro desde vistaPanelPrincipal
 
-    public void inicializarColores(int numColores) {
-        colores = new Color[numColores];
-        // Colores disponibles
-        colores[0] = Color.RED;
-        colores[1] = Color.BLUE;
-        colores[2] = Color.GREEN;
-        colores[3] = Color.YELLOW;
+	/**
+	 * Contructor que inicializa un array de colores con dimensión segun nivel de
+	 * dificultad Inicializa el método que crea el panel superior con 'Colores
+	 * disponibles' Inicializa el método que crea el panel inferior con
+	 * 'Conmbinación secreta'
+	 */
+	public vistaPanelesDer() {
+		// Inicializa con 4 colores por defecto
+		inicializarColores(nivel);
+		crearColores();
+		crearSolucion();
+	}
 
-        if (numColores >= 6) {
-            colores[4] = Color.ORANGE;
-            colores[5] = Color.MAGENTA;
-        }
+	/**
+	 * Crea un array de colores de tamaño según nivel de dificultad
+	 * @param nivelDifi
+	 */
+	public void inicializarColores(int nivelDifi) {
+		colores = new Color[nivelDifi];
 
-        if (numColores == 8) {
-            colores[6] = Color.CYAN;
-            colores[7] = Color.PINK;
-        }
-    }
+		// Colores nivel por pricipiante
+		colores[0] = Color.RED;
+		colores[1] =  new Color(114, 140, 187);
+		colores[2] = Color.GREEN;
+		colores[3] = Color.YELLOW;
 
-    public void crearColores() {
-        panelSuperiorDerecho = new JPanel();
-        panelSuperiorDerecho.setBounds(450, 50, 180, 60);
-        panelSuperiorDerecho.setLayout(new GridLayout(1, colores.length, 20, 20));
+		// Colores nivel medio
+		if (nivelDifi == 6) {
+			colores[4] = Color.ORANGE;
+			colores[5] = Color.MAGENTA;
+		}
 
-        Border outerBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
-        Border innerBorder = BorderFactory.createEmptyBorder(20, 10, 10, 10);
-        Border compoundBorder1 = BorderFactory.createCompoundBorder(outerBorder, innerBorder);
-        panelSuperiorDerecho.setBorder(BorderFactory.createTitledBorder(compoundBorder1, "Colores Disponibles"));
+		// colores nivel avanzado
+		if (nivelDifi == 8) {
+			colores[6] = Color.CYAN;
+			colores[7] = Color.PINK;
+		}
+	}
 
-        for (Color color : colores) {
-            JPanel bolaColor = new JPanel();
-            bolaColor.setBackground(color);
-            bolaColor.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-            panelSuperiorDerecho.add(bolaColor);
-        }
-    }
+	/**
+	 */
+	public void crearColores() {
+		panelSuperiorDerecho = new JPanel();
+		panelSuperiorDerecho.setBounds(450, 50, 230, 60);
+		panelSuperiorDerecho.setLayout(new GridLayout(1, colores.length, 10, 10));
 
+		Border outerBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
+		Border innerBorder = BorderFactory.createEmptyBorder(20, 10, 10, 10);
+		Border compoundBorder1 = BorderFactory.createCompoundBorder(outerBorder, innerBorder);
+		panelSuperiorDerecho.setBorder(BorderFactory.createTitledBorder(compoundBorder1, "Colores Disponibles"));
 
-    public void crearSolucion() {
-        panelInferiorDerecho = new JPanel();
-        panelInferiorDerecho.setBounds(450, 200, 180, 60);
-        panelInferiorDerecho.setLayout(new GridLayout(1, colores.length,20,20));
+		for (Color color : colores) {
+			JPanel bolaColor = new JPanel();
+			bolaColor.setBackground(color);
+			bolaColor.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+			panelSuperiorDerecho.add(bolaColor);
+		}
+		
+	}
 
-        Border outerBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
-        Border innerBorder = BorderFactory.createEmptyBorder(20, 10, 10, 10);
-        Border compoundBorder = BorderFactory.createCompoundBorder(outerBorder, innerBorder);
-        panelInferiorDerecho.setBorder(BorderFactory.createTitledBorder(compoundBorder, "Combinación secreta"));
+	public void crearSolucion() {
+		panelInferiorDerecho = new JPanel();
+		panelInferiorDerecho.setBounds(450, 150, 230, 60);
+		panelInferiorDerecho.setLayout(new GridLayout(1, colores.length, 10, 10));
 
-        // El panel de solución no seravisible inicialmente
-        panelInferiorDerecho.setVisible(true);
+		Border outerBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
+		Border innerBorder = BorderFactory.createEmptyBorder(20, 10, 10, 10);
+		Border compoundBorder = BorderFactory.createCompoundBorder(outerBorder, innerBorder);
+		panelInferiorDerecho.setBorder(BorderFactory.createTitledBorder(compoundBorder, "Combinación secreta"));
 
-        Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
-        solucion = new Color[colores.length];
-        Random rand = new Random();
-        for (int i = 0; i < colores.length; i++) {
-            int randomIndex = rand.nextInt(colores.length);
-            solucion[i] = colores[randomIndex];
-            JPanel bolaSolucion = new JPanel();
-            bolaSolucion.setBackground(solucion[i]);
-            bolaSolucion.setBorder(border);
-            panelInferiorDerecho.add(bolaSolucion);
-        }
-    }
+		// El panel de solución no seravisible inicialmente
+//		panelInferiorDerecho.setVisible(true);
+		panelInferiorDerecho.setVisible(false);
 
-    public JPanel getPanelSuperiorDerecho() {
-        return panelSuperiorDerecho;
-    }
+		Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+		solucion = new Color[colores.length];
+		Random rand = new Random();
+		for (int i = 0; i < colores.length; i++) {
+			int randomIndex = rand.nextInt(colores.length);
+			solucion[i] = colores[randomIndex];
+			JPanel bolaSolucion = new JPanel();
+			bolaSolucion.setBackground(solucion[i]);
+			bolaSolucion.setBorder(border);
+			panelInferiorDerecho.add(bolaSolucion);
+		}
+	}
+	
+	public void actualizarPanelSolucion() {
+	    panelInferiorDerecho.setVisible(acertaste);
+	}
 
-    public JPanel getPanelInferiorDerecho() {
-        return panelInferiorDerecho;
-    }
+	
+
+	public JPanel getPanelSuperiorDerecho() {
+		return panelSuperiorDerecho;
+	}
+
+	public JPanel getPanelInferiorDerecho() {
+		return panelInferiorDerecho;
+	}
+
+	public Color[] getColores() {
+		return colores;
+	}
+
+	public int getNumColores() {
+		return colores.length;
+	}
+
+	public Color[] getSolucion() {
+		return solucion;
+	}
+
+	public boolean isAcertaste() {
+		return acertaste;
+	}
+
+	public void setAcertaste(boolean acertaste) {
+		this.acertaste = acertaste;
+	}
+	
+
 }
