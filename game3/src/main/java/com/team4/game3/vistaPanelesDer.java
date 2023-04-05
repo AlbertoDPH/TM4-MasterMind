@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class vistaPanelesDer {
@@ -14,7 +15,7 @@ public class vistaPanelesDer {
 	private Color[] solucion; // Array que guarda la 'Combinacion secreta' de colores aleatorios
 	private boolean acertaste = false;
 
-	int nivel = 4; // Se pasará por parámetro desde vistaPanelPrincipal
+	int nivel;
 
 	/**
 	 * Contructor que inicializa un array de colores con dimensión segun nivel de
@@ -22,15 +23,41 @@ public class vistaPanelesDer {
 	 * disponibles' Inicializa el método que crea el panel inferior con
 	 * 'Conmbinación secreta'
 	 */
-	public vistaPanelesDer() {
-		// Inicializa con 4 colores por defecto
-		inicializarColores(nivel);
+	public vistaPanelesDer(String niv, ArrayList<Color> col) {
+		nivel = ajustarNivel(niv);
+		if (col == null) {
+			inicializarColores(nivel);
+		} else {
+			setColores(nivel, col);
+		}
 		crearColores();
 		crearSolucion();
 	}
 
+	public int ajustarNivel(String niv) {
+		int nivel;
+
+		switch (niv) {
+		case "principiante":
+			nivel = 4;
+			break;
+		case "medio":
+			nivel = 6;
+			break;
+		case "avanzado":
+			nivel = 8;
+			break;
+		default:
+			nivel = 4;
+			break;
+		}
+
+		return nivel;
+	}
+
 	/**
 	 * Crea un array de colores de tamaño según nivel de dificultad
+	 * 
 	 * @param nivelDifi
 	 */
 	public void inicializarColores(int nivelDifi) {
@@ -38,18 +65,18 @@ public class vistaPanelesDer {
 
 		// Colores nivel por pricipiante
 		colores[0] = Color.RED;
-		colores[1] =  new Color(114, 140, 187);
+		colores[1] = new Color(114, 140, 187);
 		colores[2] = Color.GREEN;
 		colores[3] = Color.YELLOW;
 
 		// Colores nivel medio
-		if (nivelDifi == 6) {
+		if (nivelDifi >= 6) {
 			colores[4] = Color.ORANGE;
 			colores[5] = Color.MAGENTA;
 		}
 
 		// colores nivel avanzado
-		if (nivelDifi == 8) {
+		if (nivelDifi >= 8) {
 			colores[6] = Color.CYAN;
 			colores[7] = Color.PINK;
 		}
@@ -73,7 +100,7 @@ public class vistaPanelesDer {
 			bolaColor.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 			panelSuperiorDerecho.add(bolaColor);
 		}
-		
+
 	}
 
 	public void crearSolucion() {
@@ -87,8 +114,8 @@ public class vistaPanelesDer {
 		panelInferiorDerecho.setBorder(BorderFactory.createTitledBorder(compoundBorder, "Combinación secreta"));
 
 		// El panel de solución no seravisible inicialmente
-//		panelInferiorDerecho.setVisible(true);
 		panelInferiorDerecho.setVisible(true);
+//		panelInferiorDerecho.setVisible(false);
 
 		Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
 		solucion = new Color[colores.length];
@@ -102,12 +129,10 @@ public class vistaPanelesDer {
 			panelInferiorDerecho.add(bolaSolucion);
 		}
 	}
-	
-	public void actualizarPanelSolucion() {
-	    panelInferiorDerecho.setVisible(acertaste);
-	}
 
-	
+	public void actualizarPanelSolucion() {
+		panelInferiorDerecho.setVisible(acertaste);
+	}
 
 	public JPanel getPanelSuperiorDerecho() {
 		return panelSuperiorDerecho;
@@ -136,6 +161,11 @@ public class vistaPanelesDer {
 	public void setAcertaste(boolean acertaste) {
 		this.acertaste = acertaste;
 	}
-	
 
+	public void setColores(int nivelDifi, ArrayList<Color> col) {
+		colores = new Color[nivelDifi];
+		for (int i = 0; i < col.size(); i++) {
+			colores[i] = col.get(i);
+		}
+	}
 }

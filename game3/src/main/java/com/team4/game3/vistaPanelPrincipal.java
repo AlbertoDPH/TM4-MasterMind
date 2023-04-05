@@ -7,6 +7,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 public class vistaPanelPrincipal extends JFrame {
@@ -14,12 +16,16 @@ public class vistaPanelPrincipal extends JFrame {
 
 	private JPanel contentPane;
 
-	public String nivelActualString = "";
+	public String nivelActualString = "principiante";
 
-	//Instaciamos la vistaPanelesDer
+	// Instaciamos la vistaPanelesDer
 	private vistaPanelesDer vistaPanelesDer;
-	//Instanciamos la vistaComprobar
+	// Instanciamos la vistaComprobar
 	private vistaComprobar vistaComprobar;
+	// Instanciamos la vistaNivel
+	private vistaNivel vNivel;
+	// Instanciamos la vistaCambioColores
+	vistaCambioColores vCamCol;
 
 	public vistaPanelPrincipal() {
 		setResizable(false);
@@ -61,7 +67,7 @@ public class vistaPanelPrincipal extends JFrame {
 		menuAyuda.add(itemAcercaDe);
 
 		JMenu menuOpciones = new JMenu("Opciones");
-		menuOpciones.setEnabled(false);
+		// menuOpciones.setEnabled(false); // Primera partida desactivado
 		menuBar.add(menuOpciones);
 
 		JMenuItem itemCambioColor = new JMenuItem("Cambiar Colores");
@@ -75,15 +81,15 @@ public class vistaPanelPrincipal extends JFrame {
 		itemAcercaDe.addActionListener(acercaDeActionListener);
 		itemCambioColor.addActionListener(cambioColorActionListener);
 
-		vistaPanelesDer = new vistaPanelesDer();
+		vistaPanelesDer = new vistaPanelesDer(nivelActualString, null);
 		vistaComprobar = new vistaComprobar(vistaPanelesDer.getColores(), vistaPanelesDer);
 
 		// Agregar panelSuperiorDerecho y panelInferiorDerecho al diseño en
 		// vistaPanelPrincipal
 		contentPane.add(vistaPanelesDer.getPanelSuperiorDerecho());
 		contentPane.add(vistaPanelesDer.getPanelInferiorDerecho());
-		
-		//Agragamos el panel vistaComprobar al JPanel principal
+
+		// Agragamos el panel vistaComprobar al JPanel principal
 		contentPane.add(vistaComprobar);
 
 		setVisible(true);
@@ -91,14 +97,22 @@ public class vistaPanelPrincipal extends JFrame {
 
 	ActionListener nuevoJuegoActionListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			nuevoJuego();
+			nuevoJuego(null);
 		}
 	};
 
 	ActionListener nivelActionListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			vistaNivel vNivel = new vistaNivel();
-			// FALTA RECOGER EL NIVEL QUE SE HA ASIGNADO !!
+			vNivel = new vistaNivel();
+			vNivel.buttonAceptar.addActionListener(nivelAceptarActionListener);
+		}
+	};
+
+	ActionListener nivelAceptarActionListener = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			nivelActualString = vNivel.getNivel();
+			vNivel.dispose();
+			nuevoJuego(null);
 		}
 	};
 
@@ -122,14 +136,43 @@ public class vistaPanelPrincipal extends JFrame {
 
 	ActionListener cambioColorActionListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Cambio color");
-			// vistaCambioColor vCaCo = new vistaCambioColor();
+			vCamCol = new vistaCambioColores(nivelActualString);
+			vCamCol.buttonAceptar.addActionListener(cambioColorAceptarActionListener);
 		}
 	};
 
+	ActionListener cambioColorAceptarActionListener = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			ArrayList<Color> coloresNuevos = vCamCol.crearColores();
+			vCamCol.dispose();
+			nuevoJuego(coloresNuevos);
+		}
+	};
+
+	// Elimina todos los componentes
+	public void borrar_componentes() {
+		contentPane.remove(vistaPanelesDer.getPanelSuperiorDerecho());
+		contentPane.remove(vistaPanelesDer.getPanelInferiorDerecho());
+		contentPane.remove(vistaComprobar);
+	}
+
 	// Termina la partida actual e inicia un nuevo juego
-	public void nuevoJuego() {
-		System.out.println("NUEVO JUEGO!");
+	public void nuevoJuego(ArrayList<Color> col) {
+		borrar_componentes();
+		vistaPanelesDer = new vistaPanelesDer(nivelActualString, col);
+
+		
+		vistaComprobar = new vistaComprobar(vistaPanelesDer.getColores(), vistaPanelesDer);
+
+		// Agregar panelSuperiorDerecho y panelInferiorDerecho al diseño en
+		// vistaPanelPrincipal
+		contentPane.add(vistaPanelesDer.getPanelSuperiorDerecho());
+		contentPane.add(vistaPanelesDer.getPanelInferiorDerecho());
+
+		// Agragamos el panel vistaComprobar al JPanel principal
+		contentPane.add(vistaComprobar);
+		contentPane.revalidate();
+		contentPane.repaint();
 	}
 
 }
