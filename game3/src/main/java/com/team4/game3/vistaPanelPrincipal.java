@@ -24,7 +24,7 @@ public class vistaPanelPrincipal extends JFrame {
 	public vistaPanelPrincipal() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 500);
+		setBounds(100, 100, 700, 1000);
 		setTitle("MASTERMIND");
 
 		contentPane = new JPanel();
