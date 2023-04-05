@@ -16,6 +16,8 @@ public class vistaNivel extends JFrame {
 	private ButtonGroup rButtonsGroup = new ButtonGroup();
 	public String nivelString = "principiante";
 
+	public JButton buttonAceptar;
+
 	public vistaNivel() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -51,7 +53,7 @@ public class vistaNivel extends JFrame {
 		rButtonsGroup.add(rButtonAvanzado);
 
 		// Crea los botones
-		JButton buttonAceptar = new JButton("Aceptar");
+		buttonAceptar = new JButton("Aceptar");
 		buttonAceptar.setBounds(35, 210, 89, 23);
 		contentPane.add(buttonAceptar);
 
@@ -60,30 +62,21 @@ public class vistaNivel extends JFrame {
 		contentPane.add(buttonCancelar);
 
 		// Añade los ActionListeners a los botones
-		buttonAceptar.addActionListener(aceptarActionListener);
 		buttonCancelar.addActionListener(cancelarActionListener);
 
 		setVisible(true);
 	}
 
-	// Asigna a nivelString el nivel según el JRadioButton seleccionado
-	ActionListener aceptarActionListener = new ActionListener() {
+	// Asigna a nivelString el nivel principiante
+	ActionListener cancelarActionListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			nivelString = rButtonsGroup.getSelection().getActionCommand();
 			dispose();
 		}
 	};
 
-	// Asigna a nivelString el nivel principiante
-	ActionListener cancelarActionListener = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			nivelString = "principiante"; 
-			dispose();
-		}
-	};
-	
 	// Devuelve el nivel actual (valor de nivelString)
 	public String getNivel() {
+		nivelString = rButtonsGroup.getSelection().getActionCommand();
 		return nivelString;
 	}
 }

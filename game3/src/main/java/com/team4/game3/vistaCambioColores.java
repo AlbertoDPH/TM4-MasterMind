@@ -19,6 +19,7 @@ public class vistaCambioColores extends JFrame {
 	private JPanel contentPane;
 	
 	private String nivel = "principiante";
+	private int panelesVisibles = 0;
 	
 	private ArrayList<Color> colores = new ArrayList<>();
 	
@@ -30,10 +31,15 @@ public class vistaCambioColores extends JFrame {
 	private JPanel panel4 = new JPanel();
 	private JPanel panel5 = new JPanel();
 	private JPanel panel6 = new JPanel();
+	private JPanel panel7 = new JPanel();
+	private JPanel panel8 = new JPanel();
+	
+	public JButton buttonAceptar;
 
-	public vistaCambioColores() {
+	public vistaCambioColores(String niv) {
+		nivel = niv;
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 600, 250);
+		setBounds(100, 100, 750, 250);
 		setTitle("Opciones de juego");
 		
 		contentPane = new JPanel();
@@ -44,28 +50,36 @@ public class vistaCambioColores extends JFrame {
 
 		// -----------------------------------------------------------------------------
 		panel1.setBackground(new Color(255, 255, 255));
-		panel1.setBounds(14, 35, 80, 80);
+		panel1.setBounds(10, 36, 80, 80);
 		contentPane.add(panel1);
 		
 		panel2.setBackground(Color.WHITE);
-		panel2.setBounds(108, 35, 80, 80);
+		panel2.setBounds(100, 36, 80, 80);
 		contentPane.add(panel2);
 		
 		panel3.setBackground(Color.WHITE);
-		panel3.setBounds(202, 35, 80, 80);
+		panel3.setBounds(190, 36, 80, 80);
 		contentPane.add(panel3);
 		
 		panel4.setBackground(Color.WHITE);
-		panel4.setBounds(296, 35, 80, 80);
+		panel4.setBounds(280, 36, 80, 80);
 		contentPane.add(panel4);
 		
 		panel5.setBackground(Color.WHITE);
-		panel5.setBounds(390, 35, 80, 80);
+		panel5.setBounds(370, 36, 80, 80);
 		contentPane.add(panel5);
 		
 		panel6.setBackground(Color.WHITE);
-		panel6.setBounds(484, 35, 80, 80);
+		panel6.setBounds(460, 36, 80, 80);
 		contentPane.add(panel6);
+		
+		panel7.setBackground(Color.WHITE);
+		panel7.setBounds(550, 36, 80, 80);
+		contentPane.add(panel7);
+		
+		panel8.setBackground(Color.WHITE);
+		panel8.setBounds(640, 36, 80, 80);
+		contentPane.add(panel8);
 
 		// -----------------------------------------------------------------------------
 		panel1.addMouseListener(panelClicked);
@@ -74,6 +88,8 @@ public class vistaCambioColores extends JFrame {
 		panel4.addMouseListener(panelClicked);
 		panel5.addMouseListener(panelClicked);
 		panel6.addMouseListener(panelClicked);
+		panel7.addMouseListener(panelClicked);
+		panel8.addMouseListener(panelClicked);
 		
 		paneles.add(panel1);
 		paneles.add(panel2);
@@ -81,19 +97,21 @@ public class vistaCambioColores extends JFrame {
 		paneles.add(panel4);
 		paneles.add(panel5);
 		paneles.add(panel6);
+		paneles.add(panel7);
+		paneles.add(panel8);
 		
 		// -----------------------------------------------------------------------------
-		JButton buttonAceptar = new JButton("Aceptar");
-		buttonAceptar.setBounds(187, 152, 89, 23);
+		buttonAceptar = new JButton("Aceptar");
+		buttonAceptar.setBounds(100, 152, 89, 23);
 		contentPane.add(buttonAceptar);
 		
 		JButton buttonCancelar = new JButton("Cancelar");
-		buttonCancelar.setBounds(307, 152, 89, 23);
+		buttonCancelar.setBounds(271, 152, 89, 23);
 		contentPane.add(buttonCancelar);
+		buttonCancelar.addActionListener(cancelarActionListener);
 		
 		// -----------------------------------------------------------------------------
-		buttonAceptar.addActionListener(aceptarActionListener);
-		buttonCancelar.addActionListener(cancelarActionListener);
+		//buttonAceptar.addActionListener(aceptarActionListener);
 	
 		// -----------------------------------------------------------------------------
 		comprovarPanelesVisibles();
@@ -101,23 +119,12 @@ public class vistaCambioColores extends JFrame {
 		setVisible(true);
 	}
 	
-	ActionListener aceptarActionListener = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			int numPanelesVisibles = 0;
-			if(nivel == "principiante"){
-				numPanelesVisibles = 4;
-			} else if(nivel == "medio"){
-				numPanelesVisibles = 5;
-			} else if(nivel == "avanzado"){
-				numPanelesVisibles = 6;
-			}
-			
-			for(int i = 0; i < numPanelesVisibles; i++) {
-				colores.add(paneles.get(i).getBackground());
-			}
-			dispose();
-		}
-	};
+//	ActionListener aceptarActionListener = new ActionListener() {
+//		public void actionPerformed(ActionEvent e) {	
+//		
+//			dispose();
+//		}
+//	};
 	
 	ActionListener cancelarActionListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -135,17 +142,33 @@ public class vistaCambioColores extends JFrame {
 		}
 	};
 	
+	public ArrayList<Color> crearColores() {
+		for(int i = 0; i < panelesVisibles; i++) {
+			colores.add(paneles.get(i).getBackground());
+		}
+		return colores;
+	}
+	
 	// -----------------------------------------------------------------------------
 	public void comprovarPanelesVisibles() {
 		if(nivel == "principiante"){
+			panelesVisibles = 4;
 			panel5.setVisible(false);
 			panel6.setVisible(false);
+			panel7.setVisible(false);
+			panel8.setVisible(false);			
 		} else if(nivel == "medio"){
-			panel5.setVisible(true);
-			panel6.setVisible(false);
-		} else if(nivel == "avanzado"){
+			panelesVisibles = 6;
 			panel5.setVisible(true);
 			panel6.setVisible(true);
+			panel7.setVisible(false);
+			panel8.setVisible(false);
+		} else if(nivel == "avanzado"){
+			panelesVisibles = 8;
+			panel5.setVisible(true);
+			panel6.setVisible(true);
+			panel7.setVisible(true);
+			panel8.setVisible(true);
 		}
 	}
 }
