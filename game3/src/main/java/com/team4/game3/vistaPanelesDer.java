@@ -14,7 +14,7 @@ public class vistaPanelesDer {
 	private Color[] solucion; // Array que guarda la 'Combinacion secreta' de colores aleatorios
 	private boolean acertaste = false;
 
-	int nivel = 6; // Se pasará por parámetro desde vistaPanelPrincipal
+	int nivel = 4; // Se pasará por parámetro desde vistaPanelPrincipal
 
 	/**
 	 * Contructor que inicializa un array de colores con dimensión segun nivel de
@@ -88,7 +88,7 @@ public class vistaPanelesDer {
 
 		// El panel de solución no seravisible inicialmente
 //		panelInferiorDerecho.setVisible(true);
-		panelInferiorDerecho.setVisible(false);
+		panelInferiorDerecho.setVisible(true);
 
 		Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
 		solucion = new Color[colores.length];

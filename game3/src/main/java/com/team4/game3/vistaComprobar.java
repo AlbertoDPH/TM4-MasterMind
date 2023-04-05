@@ -1,7 +1,6 @@
 package com.team4.game3;
 
 import java.awt.Color;
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,6 +23,7 @@ public class vistaComprobar extends JPanel {
 	private int correctPositions = 0;
 	private Color[] colores;
 	private vistaPanelesDer panelesDer;
+	private JButton btnComprobarActual; // activa o desactiva el boton
 
 	vistaPanelesDer vp = new vistaPanelesDer();
 
@@ -31,15 +31,29 @@ public class vistaComprobar extends JPanel {
 		this.colores = colores;
 		this.panelesDer = panelesDer;
 
-		setBounds(10, 30, 450, 300);
+		setBounds(10, 30, 450, 900);
+
+//		setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));// *
 		setLayout(null);
 		crear_linea_bola(0);
 
 	}
 
 	public void crear_linea_bola(int posicionNuevoIntento) {
+		// Deshabilita el boton de la tirada anterior
+		if (btnComprobarActual != null) {
+			btnComprobarActual.setEnabled(false);
+		}
+		if (posicionNuevoIntento > 900) {
+			JOptionPane.showMessageDialog(null, "Has agotado los intentos");
+			btnComprobarActual.setEnabled(false);
+			comporobarColores.setEnabled(false);
+
+		}
+
 		comporobarColores = new JPanel();
-		comporobarColores.setBounds(0, posicionNuevoIntento, 434, 47);
+		comporobarColores.setBounds(0, posicionNuevoIntento, 434, 35);// *
+//		comporobarColores.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));// *
 		add(comporobarColores);
 		comporobarColores.setLayout(null);
 
@@ -75,6 +89,10 @@ public class vistaComprobar extends JPanel {
 
 		JButton btnNewButton = new JButton("Comprobar");
 
+		// Habilita el boton de la tirada actual
+		btnNewButton.setEnabled(true);
+		btnComprobarActual = btnNewButton;
+
 		btnNewButton.addActionListener(comprobar);
 		btnNewButton.setBounds(posXComprobar, 11, 98, 25);
 		comporobarColores.add(btnNewButton);
@@ -97,21 +115,25 @@ public class vistaComprobar extends JPanel {
 	ActionListener comprobar = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			Color[] solucion = panelesDer.getSolucion();
-			
+
 			if (solucion != null) {
 				correctPositions = 0;
+				int semiCorrectPositions = 0;
+
 				for (int i = 0; i < colores.length; i++) {
 					JLabel currentBola = (JLabel) comporobarColores.getComponent(i);
 					Color currentColor = currentBola.getBackground();
 
 					if (currentColor.equals(solucion[i])) {
 						correctPositions++;
-						currentBola.setBorder(BorderFactory.createLineBorder(Color.BLACK, 6));
+//						currentBola.setBorder(BorderFactory.createLineBorder(Color.BLACK, 6));
 					} else if (Arrays.asList(solucion).contains(currentColor)) {
-						currentBola.setBorder(BorderFactory.createLineBorder(Color.WHITE, 6));
+						semiCorrectPositions++;
+//						currentBola.setBorder(BorderFactory.createLineBorder(Color.WHITE, 6));
 					}
 
 				}
+				mostrarAciertos(correctPositions, semiCorrectPositions, posicionNuevoIntento + 40);
 
 			}
 			if (correctPositions == colores.length) {
@@ -125,12 +147,48 @@ public class vistaComprobar extends JPanel {
 
 			} else {
 				// Crear nueva línea de bolas y actualizar la interfaz de usuario
-				crear_linea_bola(posicionNuevoIntento += 40);
+				crear_linea_bola(posicionNuevoIntento += 70);
 				comporobarColores.repaint();
 
 			}
 
 		}
 	};
+
+	public void mostrarAciertos(int numCorrectos, int numSemiaciertos, int posY) {
+		JPanel aciertosPanel = new JPanel();
+		aciertosPanel.setBounds(0, posY, 434, 20);
+
+//		aciertosPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));// *
+		aciertosPanel.setLayout(null);
+		add(aciertosPanel);
+
+		int startX = 13;
+		int startY = 0;
+
+		for (int i = 0; i < numCorrectos; i++) {
+			JLabel correctLabel = new JLabel("");
+			correctLabel.setOpaque(true);
+			correctLabel.setBackground(Color.BLACK);
+
+			correctLabel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+			correctLabel.setBounds(startX, startY, 15, 15);
+			aciertosPanel.add(correctLabel);
+			startX += 35;
+		}
+
+		for (int i = 0; i < numSemiaciertos; i++) {
+			JLabel semiCorrectLabel = new JLabel("");
+			semiCorrectLabel.setOpaque(true);
+			semiCorrectLabel.setBackground(Color.WHITE);
+			semiCorrectLabel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+			semiCorrectLabel.setBounds(startX, startY, 15, 15);
+			aciertosPanel.add(semiCorrectLabel);
+			startX += 35;
+		}
+
+		aciertosPanel.revalidate();
+		aciertosPanel.repaint();
+	}
 
 }
