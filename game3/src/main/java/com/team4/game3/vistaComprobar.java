@@ -24,8 +24,10 @@ public class vistaComprobar extends JPanel {
 	private Color[] colores;
 	private vistaPanelesDer panelesDer;
 	private JButton btnComprobarActual; // activa o desactiva el boton
+	private JButton btnComprobarAnterior;
+	private JLabel[] bolasAnteriores; // Controlamos las tiradas anteriores
 
-	//vistaPanelesDer vp = new vistaPanelesDer();
+	// vistaPanelesDer vp = new vistaPanelesDer();
 
 	public vistaComprobar(Color[] colores, vistaPanelesDer panelesDer) {
 		this.colores = colores;
@@ -33,17 +35,28 @@ public class vistaComprobar extends JPanel {
 
 		setBounds(10, 30, 450, 900);
 
-//		setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));// *
 		setLayout(null);
 		crear_linea_bola(0);
 
 	}
 
 	public void crear_linea_bola(int posicionNuevoIntento) {
+		// Deshabilita la tirada anterior
+		if (bolasAnteriores != null) {
+			for (JLabel bola : bolasAnteriores) {
+				bola.removeMouseListener(raton); // Hace que no se puedan activar las bolas anteriores
+			}
+		}
 		// Deshabilita el boton de la tirada anterior
 		if (btnComprobarActual != null) {
-			btnComprobarActual.setEnabled(false);
+			btnComprobarActual.setVisible(false);
+
 		}
+		// Oculta el boton btnComprobar de la tirada anterior
+		if (btnComprobarAnterior != null) {
+			btnComprobarAnterior.setVisible(false);
+		}
+
 		if (posicionNuevoIntento > 900) {
 			JOptionPane.showMessageDialog(null, "Has agotado los intentos");
 			btnComprobarActual.setEnabled(false);
@@ -96,6 +109,16 @@ public class vistaComprobar extends JPanel {
 		btnNewButton.addActionListener(comprobar);
 		btnNewButton.setBounds(posXComprobar, 11, 98, 25);
 		comporobarColores.add(btnNewButton);
+
+		/*
+		 * Crea el array con el numero de coleres, dentro del buble obtiene el component
+		 * y lo castea para guardarlo en el array Por lo qeu este arrray contiene la
+		 * tirada anterior con las bolas deshabilitdas a eventos de raton
+		 */
+		bolasAnteriores = new JLabel[colores.length];
+		for (i = 0; i < colores.length; i++) {
+			bolasAnteriores[i] = (JLabel) comporobarColores.getComponent(i);
+		}
 	}
 
 	MouseListener raton = new MouseAdapter() {
