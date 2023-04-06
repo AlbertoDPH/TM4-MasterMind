@@ -17,7 +17,9 @@ public class vistaPanelPrincipal extends JFrame {
 	private JPanel contentPane;
 
 	public String nivelActualString = "principiante";
-
+	
+	public ArrayList<Color> coloresNuevos;
+ 
 	// Instaciamos la vistaPanelesDer
 	private vistaPanelesDer vistaPanelesDer;
 	// Instanciamos la vistaComprobar
@@ -97,7 +99,7 @@ public class vistaPanelPrincipal extends JFrame {
 
 	ActionListener nuevoJuegoActionListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			nuevoJuego(null);
+			nuevoJuego(coloresNuevos);
 		}
 	};
 
@@ -143,7 +145,7 @@ public class vistaPanelPrincipal extends JFrame {
 
 	ActionListener cambioColorAceptarActionListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			ArrayList<Color> coloresNuevos = vCamCol.crearColores();
+			coloresNuevos = vCamCol.crearColores();
 			vCamCol.dispose();
 			nuevoJuego(coloresNuevos);
 		}
@@ -161,7 +163,6 @@ public class vistaPanelPrincipal extends JFrame {
 		borrar_componentes();
 		vistaPanelesDer = new vistaPanelesDer(nivelActualString, col);
 
-		
 		vistaComprobar = new vistaComprobar(vistaPanelesDer.getColores(), vistaPanelesDer);
 
 		// Agregar panelSuperiorDerecho y panelInferiorDerecho al diseño en
