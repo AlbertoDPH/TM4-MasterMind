@@ -16,7 +16,7 @@ public class vistaPanelPrincipal extends JFrame {
 
 	private JPanel contentPane;
 
-	public String nivelActualString = "principiante";
+	public static String nivelActualString = "principiante";
 
 	// Instaciamos la vistaPanelesDer
 	private vistaPanelesDer vistaPanelesDer;
@@ -175,4 +175,11 @@ public class vistaPanelPrincipal extends JFrame {
 		contentPane.repaint();
 	}
 
+	public static String getNivelActualString() {
+		return nivelActualString;
+	}
+
+	public void setNivelActualString(String nivelActualString) {
+		this.nivelActualString = nivelActualString;
+	}
 }
