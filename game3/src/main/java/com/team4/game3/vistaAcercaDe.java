@@ -23,7 +23,7 @@ public class vistaAcercaDe extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel label1 = new JLabel(
-				"<html>MASTERMIND <br><br> Autores: Alberto del Pozo, Andrea de Pezzo y Roger Gibert <br><br> Más info??");
+				"<html>MASTERMIND <br><br> Autores: Alberto del Pozo, Andrea de Pezzo y Roger Gibert <br><br> Abril 2023");
 		label1.setBounds(20, 24, 344, 113);
 		contentPane.add(label1);
 

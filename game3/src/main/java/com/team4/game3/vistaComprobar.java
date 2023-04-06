@@ -197,11 +197,13 @@ public class vistaComprobar extends JPanel {
 		int intentosPosibles = 0;
 		boolean continuarJugando = true;
 		
-		if (vistaPanelPrincipal.getNivelActualString().equals("principiante")) {
+		vistaPanelPrincipal vPanelPrincipal = new vistaPanelPrincipal();
+		
+		if (vPanelPrincipal.getNivelActualString().equals("principiante")) {
 			intentosPosibles = 10;
-		} else if (vistaPanelPrincipal.getNivelActualString().equals("medio")) {
+		} else if (vPanelPrincipal.getNivelActualString().equals("medio")) {
 			intentosPosibles = 8;
-		} else if (vistaPanelPrincipal.getNivelActualString().equals("avanzado")) {
+		} else if (vPanelPrincipal.getNivelActualString().equals("avanzado")) {
 			intentosPosibles = 6;
 		}
 		

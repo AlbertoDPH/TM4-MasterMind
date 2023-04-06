@@ -14,7 +14,7 @@ public class vistaComoJugar extends JFrame {
 	public vistaComoJugar() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 600, 300);
+		setBounds(100, 100, 570, 435);
 		setTitle("Como Jugar");
 
 		contentPane = new JPanel();
@@ -29,9 +29,14 @@ public class vistaComoJugar extends JFrame {
 				+ "- Una ficha negra indica que la de color es correcta y está en la posición adecuada<br>"
 				+ "- Una ficha blanca indica que la de color es correcta pero no está en la posición adecuada <br><br>"
 				+ "4. Si le quedan intentos, el jugador vuelve a intentar adivinar la combinación <br><br>"
-				+ "5. El juego termina cuando el jugador adivina la combinación o se queda sin intentos <html>");
+				+ "5. El juego termina cuando el jugador adivina la combinación o se queda sin intentos <br><br>"
+				+"_________________________________________________________ <br><br>"
+				+ "Niveles:<br><br>"
+				+ "- Principiante: 4 colores / 10 intentos <br> "
+				+ "- Medio: 6 colores / 8 intentos <br> "
+				+ "- Avanzado: 8 colores / 6 intentos </html>");
 		label1.setVerticalAlignment(SwingConstants.TOP);
-		label1.setBounds(24, 23, 535, 215);
+		label1.setBounds(20, 27, 524, 357);
 		contentPane.add(label1);
 
 		setVisible(true);
