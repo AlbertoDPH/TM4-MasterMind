@@ -27,6 +27,8 @@ public class vistaComprobar extends JPanel {
 	private Color[] colores;
 	private vistaPanelesDer panelesDer;
 	private JButton btnComprobarActual; // activa o desactiva el boton
+	private JButton btnComprobarAnterior;
+	private JLabel[] bolasAnteriores; // Controlamos las tiradas anteriores
 
 	//vistaPanelesDer vp = new vistaPanelesDer();
 
@@ -35,8 +37,6 @@ public class vistaComprobar extends JPanel {
 		this.panelesDer = panelesDer;
 
 		setBounds(10, 30, 450, 900);
-
-//		setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));// *
 		setLayout(null);
 		crear_linea_bola(0);
 
@@ -48,9 +48,21 @@ public class vistaComprobar extends JPanel {
 		if(comprobarIntentos() == true) {
 			intento += 1;
 			
+			// Deshabilita la tirada anterior
+			if (bolasAnteriores != null) {
+				for (JLabel bola : bolasAnteriores) {
+					bola.removeMouseListener(raton); // Hace que no se puedan activar las bolas anteriores
+				}
+			}
+			
 			// Deshabilita el boton de la tirada anterior
 			if (btnComprobarActual != null) {
-				btnComprobarActual.setEnabled(false);
+				btnComprobarActual.setVisible(false);
+			}
+			
+			// Oculta el boton btnComprobar de la tirada anterior
+			if (btnComprobarAnterior != null) {
+				btnComprobarAnterior.setVisible(false);
 			}
 	
 			comporobarColores = new JPanel();
@@ -78,6 +90,16 @@ public class vistaComprobar extends JPanel {
 				posicionBola += 35;
 	
 				comporobarColores.add(bola);
+			}
+			
+			/*
+			 * Crea el array con el numero de coleres, dentro del buble obtiene el component
+			 * y lo castea para guardarlo en el array Por lo qeu este arrray contiene la
+			 * tirada anterior con las bolas deshabilitdas a eventos de raton
+			 */
+			bolasAnteriores = new JLabel[colores.length];
+			for (i = 0; i < colores.length; i++) {
+				bolasAnteriores[i] = (JLabel) comporobarColores.getComponent(i);
 			}
 	
 			posicionBola = 10;
@@ -197,13 +219,11 @@ public class vistaComprobar extends JPanel {
 		int intentosPosibles = 0;
 		boolean continuarJugando = true;
 		
-		vistaPanelPrincipal vPanelPrincipal = new vistaPanelPrincipal();
-		
-		if (vPanelPrincipal.getNivelActualString().equals("principiante")) {
+		if (vistaPanelPrincipal.getNivelActualString().equals("principiante")) {
 			intentosPosibles = 10;
-		} else if (vPanelPrincipal.getNivelActualString().equals("medio")) {
+		} else if (vistaPanelPrincipal.getNivelActualString().equals("medio")) {
 			intentosPosibles = 8;
-		} else if (vPanelPrincipal.getNivelActualString().equals("avanzado")) {
+		} else if (vistaPanelPrincipal.getNivelActualString().equals("avanzado")) {
 			intentosPosibles = 6;
 		}
 		

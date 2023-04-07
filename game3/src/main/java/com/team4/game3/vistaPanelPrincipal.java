@@ -16,7 +16,7 @@ public class vistaPanelPrincipal extends JFrame {
 
 	private JPanel contentPane;
 
-	public String nivelActualString = "principiante";
+	public static String nivelActualString = "principiante";
 	
 	public ArrayList<Color> coloresNuevos;
  
@@ -176,7 +176,7 @@ public class vistaPanelPrincipal extends JFrame {
 		contentPane.repaint();
 	}
 
-	public String getNivelActualString() {
+	public static String getNivelActualString() {
 		return nivelActualString;
 	}
 
