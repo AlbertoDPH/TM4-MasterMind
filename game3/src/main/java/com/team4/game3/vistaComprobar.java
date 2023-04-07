@@ -26,6 +26,7 @@ public class vistaComprobar extends JPanel {
 	private JButton btnComprobarActual; // activa o desactiva el boton
 	private JButton btnComprobarAnterior;
 	private JLabel[] bolasAnteriores; // Controlamos las tiradas anteriores
+	private int intentos;
 
 	// vistaPanelesDer vp = new vistaPanelesDer();
 
@@ -37,6 +38,8 @@ public class vistaComprobar extends JPanel {
 
 		setLayout(null);
 		crear_linea_bola(0);
+		
+		
 
 	}
 
@@ -136,6 +139,9 @@ public class vistaComprobar extends JPanel {
 	};
 
 	ActionListener comprobar = new ActionListener() {
+		
+		
+
 		public void actionPerformed(ActionEvent e) {
 			Color[] solucion = panelesDer.getSolucion();
 
@@ -149,10 +155,10 @@ public class vistaComprobar extends JPanel {
 
 					if (currentColor.equals(solucion[i])) {
 						correctPositions++;
-//						currentBola.setBorder(BorderFactory.createLineBorder(Color.BLACK, 6));
+
 					} else if (Arrays.asList(solucion).contains(currentColor)) {
 						semiCorrectPositions++;
-//						currentBola.setBorder(BorderFactory.createLineBorder(Color.WHITE, 6));
+
 					}
 
 				}

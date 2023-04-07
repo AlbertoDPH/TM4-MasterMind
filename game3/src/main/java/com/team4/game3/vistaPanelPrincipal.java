@@ -90,6 +90,7 @@ public class vistaPanelPrincipal extends JFrame {
 		// vistaPanelPrincipal
 		contentPane.add(vistaPanelesDer.getPanelSuperiorDerecho());
 		contentPane.add(vistaPanelesDer.getPanelInferiorDerecho());
+		contentPane.add(vistaPanelesDer.getPanelIntentos());
 
 		// Agragamos el panel vistaComprobar al JPanel principal
 		contentPane.add(vistaComprobar);
@@ -155,6 +156,7 @@ public class vistaPanelPrincipal extends JFrame {
 	public void borrar_componentes() {
 		contentPane.remove(vistaPanelesDer.getPanelSuperiorDerecho());
 		contentPane.remove(vistaPanelesDer.getPanelInferiorDerecho());
+		contentPane.remove(vistaPanelesDer.getPanelIntentos());
 		contentPane.remove(vistaComprobar);
 	}
 
@@ -169,6 +171,7 @@ public class vistaPanelPrincipal extends JFrame {
 		// vistaPanelPrincipal
 		contentPane.add(vistaPanelesDer.getPanelSuperiorDerecho());
 		contentPane.add(vistaPanelesDer.getPanelInferiorDerecho());
+		contentPane.add(vistaPanelesDer.getPanelIntentos());
 
 		// Agragamos el panel vistaComprobar al JPanel principal
 		contentPane.add(vistaComprobar);
