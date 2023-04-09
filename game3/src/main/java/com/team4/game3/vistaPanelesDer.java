@@ -105,7 +105,7 @@ public class vistaPanelesDer {
 
 	public void crearSolucion() {
 		panelInferiorDerecho = new JPanel();
-		panelInferiorDerecho.setBounds(450, 150, 230, 60);
+		panelInferiorDerecho.setBounds(450, 250, 230, 60);
 		panelInferiorDerecho.setLayout(new GridLayout(1, colores.length, 10, 10));
 
 		Border outerBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
@@ -113,9 +113,8 @@ public class vistaPanelesDer {
 		Border compoundBorder = BorderFactory.createCompoundBorder(outerBorder, innerBorder);
 		panelInferiorDerecho.setBorder(BorderFactory.createTitledBorder(compoundBorder, "Combinación secreta"));
 
-		// El panel de solución no seravisible inicialmente
-		panelInferiorDerecho.setVisible(true);
-//		panelInferiorDerecho.setVisible(false);
+		// El panel de solución no sera visible inicialmente
+		panelInferiorDerecho.setVisible(false);
 
 		Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
 		solucion = new Color[colores.length];
@@ -130,8 +129,8 @@ public class vistaPanelesDer {
 		}
 	}
 
-	public void actualizarPanelSolucion() {
-		panelInferiorDerecho.setVisible(acertaste);
+	public void mostrarPanelSolucion() {
+		panelInferiorDerecho.setVisible(true);
 	}
 
 	public JPanel getPanelSuperiorDerecho() {

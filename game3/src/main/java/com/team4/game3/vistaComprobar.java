@@ -13,9 +13,8 @@ import java.awt.event.MouseListener;
 import java.util.Arrays;
 import java.awt.event.ActionEvent;
 
-import com.team4.game3.vistaPanelPrincipal;
-
 public class vistaComprobar extends JPanel {
+	private static final long serialVersionUID = 1L;
 
 	private JPanel comporobarColores;
 	private JLabel bola;
@@ -26,53 +25,53 @@ public class vistaComprobar extends JPanel {
 	private int correctPositions = 0;
 	private Color[] colores;
 	private vistaPanelesDer panelesDer;
-	private JButton btnComprobarActual; // activa o desactiva el boton
+	private vistaIntentos panelIntentos;
+	private JButton btnComprobarActual; // Activa o desactiva el boton
 	private JButton btnComprobarAnterior;
 	private JLabel[] bolasAnteriores; // Controlamos las tiradas anteriores
 
-	//vistaPanelesDer vp = new vistaPanelesDer();
-
-	public vistaComprobar(Color[] colores, vistaPanelesDer panelesDer) {
+	public vistaComprobar(Color[] colores, vistaPanelesDer panelesDer, vistaIntentos panelInt) {
 		this.colores = colores;
 		this.panelesDer = panelesDer;
-
+		this.panelIntentos = panelInt;	
+	
 		setBounds(10, 30, 450, 900);
 		setLayout(null);
 		crear_linea_bola(0);
-
 	}
 
 	public void crear_linea_bola(int posicionNuevoIntento) {
-		
-		//Si aun le quedan intentos, creara una linea de bolas nueva
-		if(comprobarIntentos() == true) {
+		// Si aun le quedan intentos, creara una linea de bolas nueva
+		if (comprobarIntentos() == true) {
+			panelIntentos.nuevoIntento(intento);
 			intento += 1;
-			
+
 			// Deshabilita la tirada anterior
 			if (bolasAnteriores != null) {
 				for (JLabel bola : bolasAnteriores) {
 					bola.removeMouseListener(raton); // Hace que no se puedan activar las bolas anteriores
 				}
 			}
-			
+
 			// Deshabilita el boton de la tirada anterior
 			if (btnComprobarActual != null) {
 				btnComprobarActual.setVisible(false);
 			}
-			
+
 			// Oculta el boton btnComprobar de la tirada anterior
 			if (btnComprobarAnterior != null) {
 				btnComprobarAnterior.setVisible(false);
 			}
-	
+
 			comporobarColores = new JPanel();
 			comporobarColores.setBounds(0, posicionNuevoIntento, 434, 35);// *
-			// comporobarColores.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));// *
+			// comporobarColores.setBorder(BorderFactory.createLineBorder(Color.BLACK,
+			// 1));// *
 			add(comporobarColores);
 			comporobarColores.setLayout(null);
-	
+
 			int i = 0;
-	
+
 			// Crea tantos Box como colores
 			while (i < colores.length) {
 				bola = new JLabel("");
@@ -80,18 +79,18 @@ public class vistaComprobar extends JPanel {
 				bola.setBackground(new Color(255, 255, 255));
 				bola.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 				bola.setBounds(posicionBola, 10, 25, 25);
-	
+
 				// Agregue una propiedad para almacenar el índice actual del color en el JLabel
 				bola.putClientProperty("colorIndex", 0);
-	
+
 				bola.addMouseListener(raton);
-	
+
 				i++;
 				posicionBola += 35;
-	
+
 				comporobarColores.add(bola);
 			}
-			
+
 			/*
 			 * Crea el array con el numero de coleres, dentro del buble obtiene el component
 			 * y lo castea para guardarlo en el array Por lo qeu este arrray contiene la
@@ -101,22 +100,22 @@ public class vistaComprobar extends JPanel {
 			for (i = 0; i < colores.length; i++) {
 				bolasAnteriores[i] = (JLabel) comporobarColores.getComponent(i);
 			}
-	
+
 			posicionBola = 10;
-	
+
 			if (colores.length == 8)
 				posXComprobar = 300;
 			else if (colores.length == 6)
 				posXComprobar = 250;
 			else
 				posXComprobar = 150;
-		  
+
 			JButton btnNewButton = new JButton("Comprobar");
-		
+
 			// Habilita el boton de la tirada actual
 			btnNewButton.setEnabled(true);
 			btnComprobarActual = btnNewButton;
-	
+
 			btnNewButton.addActionListener(comprobar);
 			btnNewButton.setBounds(posXComprobar, 11, 98, 25);
 			comporobarColores.add(btnNewButton);
@@ -161,13 +160,10 @@ public class vistaComprobar extends JPanel {
 			}
 			
 			if (correctPositions == colores.length) {
-
-				// Descubrimos el panel 'Comcinación secreta'
+				// Descubrimos el panel 'Combinación secreta'
+				panelesDer.mostrarPanelSolucion();
 				panelesDer.setAcertaste(true);
-				panelesDer.actualizarPanelSolucion();
-
 				JOptionPane.showMessageDialog(null, "LO HAS CONSEGUIDO");
-				// Hacer visible el panel 'panelInferiorDerecho'
 
 			} else {
 				// Crear nueva línea de bolas y actualizar la interfaz de usuario
@@ -213,12 +209,12 @@ public class vistaComprobar extends JPanel {
 		aciertosPanel.revalidate();
 		aciertosPanel.repaint();
 	}
-	
-	//Funcion que compruba cuantos intentos se pueden hacer según el nivel
+
+	// Comprueba cuantos intentos se pueden hacer según el nivel
 	public boolean comprobarIntentos() {
 		int intentosPosibles = 0;
 		boolean continuarJugando = true;
-		
+
 		if (vistaPanelPrincipal.getNivelActualString().equals("principiante")) {
 			intentosPosibles = 10;
 		} else if (vistaPanelPrincipal.getNivelActualString().equals("medio")) {
@@ -226,9 +222,11 @@ public class vistaComprobar extends JPanel {
 		} else if (vistaPanelPrincipal.getNivelActualString().equals("avanzado")) {
 			intentosPosibles = 6;
 		}
-		
+
 		if (intento == (intentosPosibles)) {
 			continuarJugando = false;
+			// Descubrimos el panel 'Combinación secreta'
+			panelesDer.mostrarPanelSolucion();
 			JOptionPane.showMessageDialog(null, "Has agotado los intentos");
 			btnComprobarActual.setEnabled(false);
 			comporobarColores.setEnabled(false);

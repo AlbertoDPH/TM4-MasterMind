@@ -15,11 +15,13 @@ public class vistaPanelPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
-
-	public static String nivelActualString = "principiante";
 	
+	public static String nivelActualString = "principiante";
+
 	public ArrayList<Color> coloresNuevos;
- 
+	
+	JMenu menuOpciones;
+
 	// Instaciamos la vistaPanelesDer
 	private vistaPanelesDer vistaPanelesDer;
 	// Instanciamos la vistaComprobar
@@ -28,11 +30,13 @@ public class vistaPanelPrincipal extends JFrame {
 	private vistaNivel vNivel;
 	// Instanciamos la vistaCambioColores
 	vistaCambioColores vCamCol;
+	// Instanciamos la vistaIntentos
+	vistaIntentos vistaIntentos;
 
 	public vistaPanelPrincipal() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 1000);
+		setBounds(100, 100, 700, 800);
 		setTitle("MASTERMIND");
 
 		contentPane = new JPanel();
@@ -68,8 +72,8 @@ public class vistaPanelPrincipal extends JFrame {
 		JMenuItem itemAcercaDe = new JMenuItem("Acerca De");
 		menuAyuda.add(itemAcercaDe);
 
-		JMenu menuOpciones = new JMenu("Opciones");
-		// menuOpciones.setEnabled(false); // Primera partida desactivado
+		menuOpciones = new JMenu("Opciones");
+		menuOpciones.setEnabled(false); // Primera partida desactivado
 		menuBar.add(menuOpciones);
 
 		JMenuItem itemCambioColor = new JMenuItem("Cambiar Colores");
@@ -84,14 +88,17 @@ public class vistaPanelPrincipal extends JFrame {
 		itemCambioColor.addActionListener(cambioColorActionListener);
 
 		vistaPanelesDer = new vistaPanelesDer(nivelActualString, null);
-		vistaComprobar = new vistaComprobar(vistaPanelesDer.getColores(), vistaPanelesDer);
+		vistaIntentos = new vistaIntentos(nivelActualString);
+		vistaComprobar = new vistaComprobar(vistaPanelesDer.getColores(), vistaPanelesDer, vistaIntentos);
 
-		// Agregar panelSuperiorDerecho y panelInferiorDerecho al diseño en
-		// vistaPanelPrincipal
+		// Agrega panelSuperiorDerecho y panelInferiorDerecho a vistaPanelPrincipal
 		contentPane.add(vistaPanelesDer.getPanelSuperiorDerecho());
 		contentPane.add(vistaPanelesDer.getPanelInferiorDerecho());
 
-		// Agragamos el panel vistaComprobar al JPanel principal
+		// Agrega vistaIntentos a vistaPanelPrincipal
+		contentPane.add(vistaIntentos.getPanelIntentos());
+		
+		// Agrega vistaComprobar a vistaPanelPrincipal
 		contentPane.add(vistaComprobar);
 
 		setVisible(true);
@@ -155,6 +162,7 @@ public class vistaPanelPrincipal extends JFrame {
 	public void borrar_componentes() {
 		contentPane.remove(vistaPanelesDer.getPanelSuperiorDerecho());
 		contentPane.remove(vistaPanelesDer.getPanelInferiorDerecho());
+		contentPane.remove(vistaIntentos.getPanelIntentos());
 		contentPane.remove(vistaComprobar);
 	}
 
@@ -162,16 +170,21 @@ public class vistaPanelPrincipal extends JFrame {
 	public void nuevoJuego(ArrayList<Color> col) {
 		borrar_componentes();
 		vistaPanelesDer = new vistaPanelesDer(nivelActualString, col);
+		vistaIntentos = new vistaIntentos(nivelActualString);
+		vistaComprobar = new vistaComprobar(vistaPanelesDer.getColores(), vistaPanelesDer, vistaIntentos);
 
-		vistaComprobar = new vistaComprobar(vistaPanelesDer.getColores(), vistaPanelesDer);
-
-		// Agregar panelSuperiorDerecho y panelInferiorDerecho al diseño en
-		// vistaPanelPrincipal
+		/// Agrega panelSuperiorDerecho y panelInferiorDerecho a vistaPanelPrincipal
 		contentPane.add(vistaPanelesDer.getPanelSuperiorDerecho());
 		contentPane.add(vistaPanelesDer.getPanelInferiorDerecho());
 
-		// Agragamos el panel vistaComprobar al JPanel principal
+		// Agrega vistaIntentos a vistaPanelPrincipal
+		contentPane.add(vistaIntentos.getPanelIntentos());
+		
+		// Agrega vistaComprobar a vistaPanelPrincipal
 		contentPane.add(vistaComprobar);
+		
+		menuOpciones.setEnabled(true); // Activado despues de la primera partida
+		
 		contentPane.revalidate();
 		contentPane.repaint();
 	}
@@ -180,7 +193,7 @@ public class vistaPanelPrincipal extends JFrame {
 		return nivelActualString;
 	}
 
-	public void setNivelActualString(String nivelActualString) {
-		this.nivelActualString = nivelActualString;
+	public void setNivelActualString(String nivel) {
+		nivelActualString = nivel;
 	}
 }
