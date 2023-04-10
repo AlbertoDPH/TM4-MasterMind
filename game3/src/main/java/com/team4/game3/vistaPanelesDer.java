@@ -34,6 +34,13 @@ public class vistaPanelesDer {
 		crearSolucion();
 	}
 
+	/**
+	 * Recibe por parametro el nivel de dificultad del juego, el cual determina el
+	 * numero de colores diponibles que tendra la partida.
+	 * 
+	 * @param niv nivel del juego
+	 * @return numero de colores que tendra la partida.
+	 */
 	public int ajustarNivel(String niv) {
 		int nivel;
 
@@ -56,7 +63,8 @@ public class vistaPanelesDer {
 	}
 
 	/**
-	 * Crea un array de colores de tamaño según nivel de dificultad
+	 * Crea un array de colores de tamaño segun nivel de dificultad Inicializa el
+	 * array con los colores para cada nivel.
 	 * 
 	 * @param nivelDifi
 	 */
@@ -83,6 +91,8 @@ public class vistaPanelesDer {
 	}
 
 	/**
+	 * Crea el panel superior que muestra los colores dispopnible para el jugador.
+	 * Inicializa y añade los colores del array 'colores'
 	 */
 	public void crearColores() {
 		panelSuperiorDerecho = new JPanel();
@@ -103,6 +113,12 @@ public class vistaPanelesDer {
 
 	}
 
+	/**
+	 * Crea el panel inferior que contiene la combinacion secreta de colores que el
+	 * jugador debe acartar. Genera la combinacion de forma aleatoria y añade los
+	 * colores al panel. Se mantiene oculto hasta que el jugador acirta la
+	 * combinacion.
+	 */
 	public void crearSolucion() {
 		panelInferiorDerecho = new JPanel();
 		panelInferiorDerecho.setBounds(450, 250, 230, 60);
@@ -129,38 +145,82 @@ public class vistaPanelesDer {
 		}
 	}
 
+	/**
+	 * Hace que se muestre el panel 'panelInferiorDerecho' mostrando la combinacion
+	 * secreta
+	 */
 	public void mostrarPanelSolucion() {
 		panelInferiorDerecho.setVisible(true);
 	}
 
+	/**
+	 * 
+	 * @return Devuelve el 'panelSuperiorDerecho' que contiene lo colores
+	 *         disponibles.
+	 */
 	public JPanel getPanelSuperiorDerecho() {
 		return panelSuperiorDerecho;
 	}
 
+	/**
+	 * 
+	 * @return Devuelve el panel 'panelInferiorDerecho' que contiene la combinación
+	 *         secreta de colores.
+	 */
 	public JPanel getPanelInferiorDerecho() {
 		return panelInferiorDerecho;
 	}
 
+	/**
+	 * 
+	 * @return Devuelve el array de colores disponibles
+	 */
 	public Color[] getColores() {
 		return colores;
 	}
 
+	/**
+	 * 
+	 * @return Devuelve el numero de colores disponibles
+	 */
 	public int getNumColores() {
 		return colores.length;
 	}
 
+	/**
+	 * 
+	 * @return Devuelve el array que contiene la combinacion secreta de colores
+	 */
 	public Color[] getSolucion() {
 		return solucion;
 	}
 
+	/**
+	 * 
+	 * @return Devuelve un booleano que indica si el jugador ha adivinado la
+	 *         combinación secreta de colores
+	 */
 	public boolean isAcertaste() {
 		return acertaste;
 	}
 
+	/**
+	 * Indica si el jugador ha adivinado correctamente la combinación secreta de
+	 * colores
+	 * 
+	 * @param acertaste
+	 */
 	public void setAcertaste(boolean acertaste) {
 		this.acertaste = acertaste;
 	}
 
+	/**
+	 * Establece los colores disponibles segun el nivel de dificultad y la lista de
+	 * colores personalizados
+	 * 
+	 * @param nivelDifi
+	 * @param col
+	 */
 	public void setColores(int nivelDifi, ArrayList<Color> col) {
 		colores = new Color[nivelDifi];
 		for (int i = 0; i < col.size(); i++) {

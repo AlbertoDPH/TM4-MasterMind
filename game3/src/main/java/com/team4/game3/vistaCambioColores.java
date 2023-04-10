@@ -13,6 +13,10 @@ import javax.swing.JColorChooser;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Nos permite modificar los colores del juego en funcion del nivel de
+ * dificultad 'principiante', 'medio' o 'avanzado'
+ */
 public class vistaCambioColores extends JFrame {
 	private static final long serialVersionUID = 1L;
 
@@ -36,6 +40,12 @@ public class vistaCambioColores extends JFrame {
 
 	public JButton buttonAceptar;
 
+	/**
+	 * Establece el tamaño titulo de la ventana, crea y agrega los paneles y
+	 * botones. Además de los eventos de escucha para los paneles y botones.
+	 * 
+	 * @param niv nivel de dificultad que recibe por parametro
+	 */
 	public vistaCambioColores(String niv) {
 		setResizable(false);
 		nivel = niv;
@@ -121,12 +131,21 @@ public class vistaCambioColores extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * Se ejecuta al hacer click en el cooton 'Cancelar' cierra la ventana actual y
+	 * descarta los cambios realizados en los colores.
+	 */
 	ActionListener cancelarActionListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			dispose();
 		}
 	};
-	
+
+	/**
+	 * Se ejecuta cada vez que se hace click en uno de los paneles de colores.
+	 * Muestra el cuadro de dialogo para seleccionar un nuevo color y si seleciona
+	 * un color valido actualiza el fondo del panel.
+	 */
 	MouseAdapter panelClicked = new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -137,6 +156,12 @@ public class vistaCambioColores extends JFrame {
 		}
 	};
 
+	/**
+	 * Crea un ArrayList de objetos de Color que representan los colores que se
+	 * usaran en el juego
+	 * 
+	 * @return retorna la lista de colores creados
+	 */
 	public ArrayList<Color> crearColores() {
 		for (int i = 0; i < panelesVisibles; i++) {
 			colores.add(paneles.get(i).getBackground());
@@ -144,7 +169,13 @@ public class vistaCambioColores extends JFrame {
 		return colores;
 	}
 
-	// -----------------------------------------------------------------------------
+	/**
+	 * Calcula y devulve el ancho del JFrame en funcion del nivel de dificultad
+	 * seleccionado
+	 * 
+	 * @param niv nivel dificultad que recibe por parametro
+	 * @return ancho del JFrame
+	 */
 	public int calcFrameWidth(String niv) {
 		int width = 0;
 
@@ -162,7 +193,11 @@ public class vistaCambioColores extends JFrame {
 		return width;
 	};
 
-	// -----------------------------------------------------------------------------
+	/**
+	 * Verifica y establece la cantidad de panelesVisibles en funcion del nivel de
+	 * dificultad. 'Principiante' muestra 4 paneles 'Medio' muestra 6 paneles
+	 * 'Avanzado' muestra 8 paneles
+	 */
 	public void comprovarPanelesVisibles() {
 		if (nivel == "principiante") {
 			panelesVisibles = 4;

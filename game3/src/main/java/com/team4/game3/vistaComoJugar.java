@@ -6,6 +6,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+/**
+ * Clase que muestra una vista con la descripcion de como se debe jugar
+ */
 public class vistaComoJugar extends JFrame {
 	private static final long serialVersionUID = 1L;
 

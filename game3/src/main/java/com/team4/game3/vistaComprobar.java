@@ -33,8 +33,8 @@ public class vistaComprobar extends JPanel {
 	public vistaComprobar(Color[] colores, vistaPanelesDer panelesDer, vistaIntentos panelInt) {
 		this.colores = colores;
 		this.panelesDer = panelesDer;
-		this.panelIntentos = panelInt;	
-	
+		this.panelIntentos = panelInt;
+
 		setBounds(10, 30, 450, 900);
 		setLayout(null);
 		crear_linea_bola(0);
@@ -158,7 +158,7 @@ public class vistaComprobar extends JPanel {
 				}
 				mostrarAciertos(correctPositions, semiCorrectPositions, posicionNuevoIntento + 40);
 			}
-			
+
 			if (correctPositions == colores.length) {
 				// Descubrimos el panel 'Combinación secreta'
 				panelesDer.mostrarPanelSolucion();

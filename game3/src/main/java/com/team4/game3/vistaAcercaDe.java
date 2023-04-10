@@ -5,6 +5,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
+/**
+ * Clase encargada de mostrar el about del juego
+ */
 public class vistaAcercaDe extends JFrame {
 	private static final long serialVersionUID = 1L;
 
